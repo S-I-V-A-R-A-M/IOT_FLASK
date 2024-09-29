@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Toggle Button Example</title>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            var socket = io();
+
+            // Listen for toggle state updates from the server
+            socket.on('toggle_update', (msg) => {
+                document.querySelector('#status').innerHTML = `Toggle is: ${msg}`;
+                document.querySelector('#toggleBtn').innerHTML = (msg === 'ON') ? 'Turn OFF' : 'Turn ON';
+            });
+
+            // When the button is clicked, emit the toggle event
+            document.querySelector('#toggleBtn').onclick = () => {
+                socket.emit('toggle');
+            };
+        });
+    </script>
+</head>
+<body>
+    <h2>Toggle Button</h2>
+    <button id="toggleBtn">Turn ON</button>
+    <p id="status">Toggle is: OFF</p>
+</body>
+</html>
